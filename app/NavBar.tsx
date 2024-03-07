@@ -1,8 +1,14 @@
+"use client"
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import React from "react";
 
 const NavBar = () => {
+    const currPath = usePathname();
+    console.log(currPath);
+    
+
   const links = [
     {
       href: "/",
@@ -17,14 +23,14 @@ const NavBar = () => {
   return (
     <nav className="flex gap-8 items-center border-b mb-5 px-8 h-20">
       <Link href="/">
-        <Image src="./logo.svg" alt="LOGO" width={100} height={100} />
+        <Image src="./logo.svg" alt="LOGO" width={60} height={60} />
       </Link>
 
       <ul className="flex gap-8 text-xl">
         {links.map((link, i) => (
           <Link
             key={i}
-            className="text-white-500 hover:text-indigo-600 transition-colors"
+            className={`${link.href === currPath ? 'text-violet-800' : 'text-white'} hover:text-violet-800 transition-colors`}
             href={link.href}
           >
             {link.label}
