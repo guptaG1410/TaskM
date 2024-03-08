@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
-import prisma from "@/prisma/client"
+import { PrismaClient } from "@prisma/client";
 
 const taskSchema = z.object({
   title: z.string().min(1).max(255),
@@ -8,6 +8,7 @@ const taskSchema = z.object({
 });
 
 export async function POST(request: NextRequest) {
+  const prisma = new PrismaClient();
   try {
     const body = await request.json();
     console.log(body);

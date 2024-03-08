@@ -29,7 +29,7 @@ const NavBar = () => {
         {links.map((link, i) => (
           <Link
             key={i}
-            className={`${link.href === currPath ? 'text-violet-800' : 'text-white'} hover:text-violet-800 transition-colors`}
+            className={`${link.href === currPath ? 'text-violet-800' : 'text-black'} hover:text-violet-800 transition-colors`}
             href={link.href}
           >
             {link.label}
