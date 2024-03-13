@@ -30,7 +30,9 @@ const TasksPage = async () => {
           {tasks.map((task: any) => (
             <Table.Row key={task.id}>
               <Table.Cell>
+                <Link href={`/tasks/${task.id}`}>
                 {task.title}
+                </Link>
                 <div className="block md:hidden">
                   <TaskStatus status={task.status} />
                 </div>

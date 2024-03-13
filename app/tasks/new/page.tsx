@@ -66,7 +66,7 @@ const newTaskPage = () => {
         />
         <ErrorMessage>{errors.description?.message}</ErrorMessage>
         <Button disabled={isSubmitting}>
-          Submit New Issue {isSubmitting && <Spinner />}
+          Submit New Task {isSubmitting && <Spinner />}
         </Button>
       </form>
     </div>

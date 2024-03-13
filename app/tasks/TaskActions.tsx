@@ -6,7 +6,7 @@ const TaskActions = () => {
   return (
     <div className="mb-5">
       <Button>
-        <Link href="/issues/new">New Issue</Link>
+        <Link href="/tasks/new">New TASK</Link>
       </Button>
     </div>
   );
