@@ -11,6 +11,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { taskSchema } from "@/app/taskSchema";
 import { z } from "zod";
 import ErrorMessage from "@/app/components/ErrorMessage";
+import Spinner from "@/app/components/Spinner";
 
 // interface TaskForm {
 //   title: string;
@@ -21,10 +22,16 @@ type TaskForm = z.infer<typeof taskSchema>;
 
 const newTaskPage = () => {
   const router = useRouter();
-  const { register, control, handleSubmit, formState: {errors} } = useForm<TaskForm>({
+  const {
+    register,
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<TaskForm>({
     resolver: zodResolver(taskSchema),
   });
   const [error, setError] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   return (
     <div className="max-w-xl">
@@ -37,9 +44,11 @@ const newTaskPage = () => {
         className="space-y-3"
         onSubmit={handleSubmit(async (data) => {
           try {
+            setIsSubmitting(true);
             await axios.post("/api/tasks", data);
             router.push("/tasks");
           } catch (error) {
+            setIsSubmitting(false);
             setError("An unexpected error occurred.");
           }
         })}
@@ -55,8 +64,10 @@ const newTaskPage = () => {
             <SimpleMDE placeholder="Description" {...field} />
           )}
         />
-       <ErrorMessage>{errors.description?.message}</ErrorMessage>
-        <Button>Submit New Issue</Button>
+        <ErrorMessage>{errors.description?.message}</ErrorMessage>
+        <Button disabled={isSubmitting}>
+          Submit New Issue {isSubmitting && <Spinner />}
+        </Button>
       </form>
     </div>
   );
