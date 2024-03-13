@@ -1,15 +1,11 @@
-import { Button, Table } from "@radix-ui/themes";
-import Link from "next/link";
-import React from "react";
-import { PrismaClient } from "@prisma/client";
-import TaskStatus from "../components/TaskStatus";
-import delay from "delay";
-import TaskActions from "./TaskActions";
+import { Table } from '@radix-ui/themes';
+import React from 'react';
+import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
+import TaskActions from './TaskActions';
 
-const TasksPage = async () => {
-  const prisma = new PrismaClient();
-  const tasks = await prisma.task.findMany();
-  await delay(2000);
+const LoadingTaskPage = () => {
+  const tasks = [1, 2, 3, 4, 5];
 
   return (
     <div>
@@ -17,7 +13,7 @@ const TasksPage = async () => {
       <Table.Root variant="surface">
         <Table.Header>
           <Table.Row>
-            <Table.ColumnHeaderCell>Task</Table.ColumnHeaderCell>
+            <Table.ColumnHeaderCell>Issue</Table.ColumnHeaderCell>
             <Table.ColumnHeaderCell className="hidden md:table-cell">
               Status
             </Table.ColumnHeaderCell>
@@ -27,19 +23,19 @@ const TasksPage = async () => {
           </Table.Row>
         </Table.Header>
         <Table.Body>
-          {tasks.map((task: any) => (
-            <Table.Row key={task.id}>
+          {tasks.map((task) => (
+            <Table.Row key={task}>
               <Table.Cell>
-                {task.title}
+                <Skeleton />
                 <div className="block md:hidden">
-                  <TaskStatus status={task.status} />
+                  <Skeleton />
                 </div>
               </Table.Cell>
               <Table.Cell className="hidden md:table-cell">
-                <TaskStatus status={task.status} />
+                <Skeleton />
               </Table.Cell>
               <Table.Cell className="hidden md:table-cell">
-                {task.createdAt.toDateString()}
+                <Skeleton />
               </Table.Cell>
             </Table.Row>
           ))}
@@ -49,4 +45,4 @@ const TasksPage = async () => {
   );
 };
 
-export default TasksPage;
+export default LoadingTaskPage;
